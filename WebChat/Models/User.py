@@ -8,9 +8,6 @@ class UserModel(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
 
     def json(self):
         return {

@@ -62,11 +62,11 @@ class UserService:
         
         except ServiceException as e:  # catch the custom exception
             db.session.rollback()
-            raise ({'Error': str(e)})
+            raise
         
         except Exception as e:  # catch all other exceptions
             db.session.rollback()
-            raise ({'Error': str(e)})
+            raise
     def return_account_by_Id(id):
         try:
             user = UserModel.query.get(id)
@@ -77,3 +77,17 @@ class UserService:
             raise ServiceException(f"Error Message: {e}")
         except OperationalError as e:  # catch any SQLAlchemy related errors
             raise ServiceException(f"Database Error: {e}")
+        
+    def delete_account_by_Id(id):
+        try: 
+            user_account = UserService.return_account_by_Id(id)
+            if user_account:
+                db.session.delete(user_account)
+                db.session.commit()
+                return user_account
+        except ServiceException as e:
+            db.session.rollback()
+            raise
+        except Exception as e:
+            db.session.rollback()
+            raise

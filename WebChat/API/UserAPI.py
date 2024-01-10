@@ -22,7 +22,7 @@ def getAccounts():
         all_accounts = UserService.get_accounts()
         if not all_accounts:
             return jsonify({'message': 'No Accounts Found'}), 404
-        return jsonify({'Accounts fetched': f"{all_accounts}"}), 201
+        return jsonify({'Accounts fetched': all_accounts}), 201
     except Exception as e:
          return jsonify({'error': f'{str(e)}'}), 500
 
@@ -31,15 +31,18 @@ def getAccounts():
 def login():
     pass
 
-@userAPI.route('/userapi/register', methods=['POST'])
-def register_account():
-    pass
-
 @userAPI.route('/userapi/update', methods=['POST'])
 def update_account():
     pass
 
 @userAPI.route('/userapi/delete/<int:id>', methods=['POST'])
-def delete_account():
-    pass
+def delete_account(id):
+    try:
+        account = UserService.delete_account_by_Id(id)
+        if account:
+            return jsonify({'message': 'Account deleted successfully'}), 200
+        else:
+         return jsonify({'error': 'Account not found'}), 404
+    except Exception as e:
+        return jsonify({'error': e})
 

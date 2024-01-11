@@ -1,0 +1,31 @@
+.col-md-10{
+    border-radius: 10px; /* Adjust the radius as needed */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #fff; /* Set your desired background color */
+    padding: 20px; /* Adjust padding as needed */
+}
+.col-md-2{
+    height: 55vh;
+ 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #fff; /* Set your desired background color */
+    border-radius: 10px; /* Adjust the radius as needed */
+}
+.fixed-container {
+    max-height: 400px; /* Adjust the maximum height as needed */
+    overflow-y: auto; /* Enable vertical scrolling when content overflows */
+    border: 1px solid #ccc; /* Add a border for visibility (optional) */
+    padding: 10px; /* Add padding as needed */
+}
+
+.profile-button {
+    margin-bottom: 10px; /* Add some spacing between buttons (optional) */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for text overflow */
+}
+
+.profile-link {
+    color: black; /* Set the text color to black */
+    text-decoration: none; /* Remove the default underline (optional) */
+}

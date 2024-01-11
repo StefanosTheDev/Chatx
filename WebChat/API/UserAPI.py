@@ -46,3 +46,14 @@ def delete_account(id):
     except Exception as e:
         return jsonify({'error': e})
 
+@userAPI.route('/userapi/getAccount/<int:id>', methods=['GET'])
+def getAccount_by_Id(id):
+    try:
+        account = UserService.return_account_by_Id(id)
+        if account:
+            return jsonify({'message': 'Account deleted successfully'}), 200
+        else:
+         return jsonify({'error': 'Account not found'}), 404
+    except Exception as e:
+        return jsonify({'error': e})
+

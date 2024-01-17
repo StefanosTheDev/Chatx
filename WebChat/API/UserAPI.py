@@ -10,9 +10,10 @@ def create_account():
         data = request.get_json() # Assuming data is sent as JSON
         new_account = UserService.create_account(
             username=data['username'],
-            password=data['password']
+            password=data['password'],
+            email = data['email']
         )
-        return jsonify({'Account Created': f"{new_account}"}), 201
+        return jsonify({'Accounts': f"{new_account}"}), 201
     except Exception as e:
          return jsonify({'error': f'{str(e)}'}), 500
 
@@ -29,7 +30,16 @@ def getAccounts():
 
 @userAPI.route('/userapi/login', methods=['POST'])
 def login():
-    pass
+    try:
+        data = request.get_json() # Data sent as json
+        account = UserService.login(
+        username=data['username'],
+        password=data['password']
+        )
+        return jsonify({'Account': f"{account}"})
+    except Exception as e:
+        return jsonify({'error': f'{str(e)}'}), 500
+
 
 @userAPI.route('/userapi/update', methods=['POST'])
 def update_account():

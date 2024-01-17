@@ -4,9 +4,9 @@ from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, P
 from flask import session
 from sqlalchemy.exc import IntegrityError, OperationalError
 class UserService:
-    def create_account(username, password):
+    def create_account(username, password, email):
         try:
-            create_acc = UserModel(username=username, password=password)
+            create_acc = UserModel(username=username, password=password, email=email)
             db.session.add(create_acc)
             db.session.commit()
             return create_acc

@@ -60,5 +60,6 @@ def login():
                 return redirect(url_for('chat.chat_homepage'))
             
     except Exception as e:
+        flash('Error', 'danger')
         return render_template('login.html', form=form)
     return render_template('login.html', form=form)

@@ -66,4 +66,26 @@ def getAccount_by_Id(id):
          return jsonify({'error': 'Account not found'}), 404
     except Exception as e:
         return jsonify({'error': e})
+        
+@userAPI.route('/userapi/friendRequest/<string:username>', methods=['POST'])
+def send_friend_request(username):
+    pass
+
+
+@userAPI.route('/userapi/friend_request_deny/<string:username', methods=['POST'])
+def deny_friend_request(username):
+    pass
+
+
+@userAPI.route('/userapi/friend_request/accept/<string:username>', methods=['POST'])
+def accept_friend_request(username):
+    pass
+
+@userAPI.route('/userapi/search_by_username/<string:username>', methods=['POST'])
+def search_by_username(username):
+    pass
+
+@userAPI.route('/userapi/remove_friend/<string:username>', methods=['POST'])
+def remove_friend_by_username(username):
+    pass
 

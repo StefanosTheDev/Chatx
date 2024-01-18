@@ -15,40 +15,7 @@
     <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="row">
-                <!-- Left column for user profiles -->
-                <div class="col-md-2">
-                    <!-- Fixed container size with scrolling -->
-                    <div class="fixed-container">
-                        <!-- Loop through profiles and generate clickable profile buttons -->
-                        {% for profile in profiles %}
-                            <h5><a href="#" class="profile-link">{{ profile['name'] }}</a></h5>
-                        {% endfor %}
-                    </div>
-                </div>
-                
-                <!-- Right column for chat area -->
-                <div class="col-md-10">
-                    <!-- Your chat area content goes here -->
-                    <div class="chat-area">
-                        <p>Stefanos Sophocleous
-                        
-                        <!-- Bootstrap phone icon -->    
-                        <button class="btn btn-secondary btn-ellipsis" type="button">...</button>
-                        
-                        <!-- Bootstrap video camera icon -->
-                        <button class="btn btn-secondary btn-ellipsis" type="button">...</button>
-                        
-                        <!-- Button with ellipsis (...) -->
-                        <button class="btn btn-secondary btn-ellipsis" type="button">...</button>
-                         <!-- Line at the end of the <p> tag -->
-                                <hr>
-                    </p>
-                        <!-- Chat messages and input box can be placed here -->
-                    </div>
-                    
-                </div>
-            </div>
+            <p>Smart Chat</p>
         </div>
     </div>
 </div>
@@ -61,3 +28,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 </body>
 </html>
+<style>
+    p{
+        text-align: center;
+    }
+</style>

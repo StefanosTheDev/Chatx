@@ -30,10 +30,12 @@ class UserService:
             ## Write up if the dictionary object meets a specific thing     
             user = UserModel.query.filter_by(username=username).first() # query for the user oject.
             if not user:
+                print('Password dont exist')
                 raise UsernameError("User does not exist")
             elif user.password == password:
                 print(f"There is a match between {user.password} and {password}")
             elif user.password != password:
+                print('Inccorect Password')
                 raise PasswordError( "Incorrect password")
         
         # Set user logged-in session
@@ -91,3 +93,13 @@ class UserService:
         except Exception as e:
             db.session.rollback()
             raise
+    def add_friend_to_user(self, user_id, friend_username):
+        try:
+            user = UserService.return_account_by_Id(user_id)
+        except Exception as e:
+            pass
+
+    def searchByUsername(username):
+        pass
+
+    

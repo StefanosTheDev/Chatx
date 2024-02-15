@@ -7,7 +7,7 @@ from re import match
 class RegForm(FlaskForm):
     username = StringField('Enter Username', validators=[DataRequired()])
     password = StringField('Enter Password', validators=[DataRequired()])
-    email = StringField('Enter Emal', validators=[DataRequired()])
+    email = StringField('Enter Email', validators=[DataRequired()])
     register = SubmitField('Register')
 
 class LoginForm(FlaskForm):

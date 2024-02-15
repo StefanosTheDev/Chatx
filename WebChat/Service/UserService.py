@@ -11,7 +11,7 @@ class UserService:
     #** 
 
 
-    def create_account(username, password, email):
+    def create_account(username, password, email, friends_list=None):
         try:
         # Hash the password
             UserService.check_username(username) # Check the Username
@@ -19,7 +19,7 @@ class UserService:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         # Create the user account with the hashed password
-            create_acc = UserModel(username=username, password=hashed_password, email=email)
+            create_acc = UserModel(username=username, password=hashed_password, email=email, friends_list=friends_list)
             db.session.add(create_acc)
             db.session.commit()
         
@@ -46,11 +46,6 @@ class UserService:
                 raise PasswordError("Incorrect password")
         except (UsernameError, PasswordError) as e:
             raise
-
-
-
-
-
     def get_accounts():
         try:
             accounts = UserModel.query.all()
@@ -61,11 +56,6 @@ class UserService:
         except Exception as e:
             db.session.rollback()
             raise
-
-
-
-    
-
 #*TODO check if i need logout like this
     def logout():
         return session.clear()

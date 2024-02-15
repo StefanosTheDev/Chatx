@@ -1,6 +1,7 @@
 import logging
 from flask import jsonify, Blueprint, request
 from Service.UserService import UserService
+from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, PasswordError
 
 userAPI = Blueprint('userapi', __name__)
 
@@ -14,8 +15,8 @@ def create_account():
             email = data['email']
         )
         return jsonify({'Accounts': f"{new_account}"}), 201
-    except Exception as e:
-         return jsonify({'error': f'{str(e)}'}), 500
+    except (UsernameError, PasswordError) as error:
+         return jsonify({'error': f'{str(error)}'}), 500
 
 @userAPI.route('/userapi/getAccounts',methods=['GET'])
 def getAccounts():
@@ -72,7 +73,7 @@ def send_friend_request(username):
     pass
 
 
-@userAPI.route('/userapi/friend_request_deny/<string:username', methods=['POST'])
+@userAPI.route('/userapi/friend_request_deny/<string:username>', methods=['POST'])
 def deny_friend_request(username):
     pass
 
@@ -89,3 +90,10 @@ def search_by_username(username):
 def remove_friend_by_username(username):
     pass
 
+@userAPI.route('/userapi/sent_friend_requests/<string:username>', methods=['GET'])
+def sent_friend_requests(username):
+    pass
+
+@userAPI.route('/userapi/friendsList/<string:username>', methods=['GET'])
+def retrieve_friends_list(username):
+    pass

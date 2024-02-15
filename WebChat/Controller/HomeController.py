@@ -9,8 +9,8 @@ home_blueprint = Blueprint('home', __name__)
 @home_blueprint.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
+from flask import flash, redirect, render_template
 
-## Send Request to Backend API
 @home_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegForm()
@@ -34,9 +34,14 @@ def register():
             if response.status_code == 201: 
                 return redirect(url_for('home.login'))
             else: 
-                flash(f"Failed to create User")
+                error_message = response.json().get('error')  # Get the error message from the API response
+                if error_message:
+                    flash(error_message)  # Flash the error message
+                    return render_template('register.html', form=form, error_message=error_message)
+                else:
+                    flash("Failed to create user")
     except Exception as e:
-        return render_template('register.html', form=form)
+        flash("An error occurred while processing your request.")  # Generic error message
     return render_template('register.html', form=form)
 
 

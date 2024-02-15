@@ -1,0 +1,13 @@
+A Chat Application that is hosted on AWS and provides real time messaging services. 
+Users can create accounts and login, They Also can Search for Users with a specific username and return the profile.
+If wanted they can send a friend request. 
+Heres how i could approach this. Every user will have a friends_list list. If a different user clicks on there profile icon add to friend,
+There profile will populate into a new list or object to the friend recieving the request. From there the user can take the object and 
+append it to there current friends list list. If they disapprove, they clear it from there request list or object. If they accept you will see it populated in the friends column.
+From there the user will have sorting capabilities and all different types of stuff. 
+
+#**TODO
+Reg, Login, Friends Management. Then Chat.
+
+
+I believe it's critical to have this done before we do any CHAT related information.

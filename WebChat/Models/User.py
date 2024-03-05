@@ -23,6 +23,7 @@ class UserModel(db.Model):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'password': self.password,
             'friends_list': json.loads(self.friends_list) if self.friends_list else None
         }
 

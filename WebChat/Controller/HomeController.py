@@ -9,7 +9,6 @@ home_blueprint = Blueprint('home', __name__)
 @home_blueprint.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
-from flask import flash, redirect, render_template
 
 @home_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -63,7 +62,11 @@ def login():
 
             if response.status_code == 200:
                 return redirect(url_for('chat.chat_homepage'))
-            
+            else:
+                error_message = response.json().get('error')
+                if error_message:
+                    flash(error_message)
+                    return render_template('login.html', form=form, error_message=error_message)
     except Exception as e:
         flash('Error', 'danger')
         return render_template('login.html', form=form)

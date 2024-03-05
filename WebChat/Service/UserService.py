@@ -1,6 +1,6 @@
 from Models.User import UserModel
 from DB.db import db
-from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, PasswordError
+from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, PasswordError, UsernameTakenError
 from flask import session
 from sqlalchemy.exc import IntegrityError, OperationalError
 import bcrypt
@@ -14,8 +14,8 @@ class UserService:
     def create_account(username, password, email, friends_list=None):
         try:
         # Hash the password
-            UserService.check_username(username) # Check the Username
-            UserService.check_password(password) # Check the Password
+           # UserService.check_username(username) # Check the Username
+          #  UserService.check_password(password) # Check the Password
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
         # Create the user account with the hashed password
@@ -24,10 +24,15 @@ class UserService:
             db.session.commit()
         
             return create_acc
-        except Exception as e:
-            db.session.rollback()
-            raise
+        except IntegrityError as e:
+            print(e)
+            error_message = "The Username you chose has been taken"
+        # Raise a custom exception
+            db.session.rollback() ## Where is the placement of this ? 
 
+            raise UsernameTakenError(error_message)
+        # Rollback any uncommitted changes
+        
     def login(username, password):
         try:
             # Search the DB fo rth euser.
@@ -42,10 +47,10 @@ class UserService:
                 session['user_id'] = user.id
                 session['username'] = user.username
                 return user
-            else:
-                raise PasswordError("Incorrect password")
-        except (UsernameError, PasswordError) as e:
-            raise
+        except AttributeError:
+            raise AttributeError('Incorrect Passs')
+        except UsernameError as e:
+            raise e
     def get_accounts():
         try:
             accounts = UserModel.query.all()
@@ -80,6 +85,7 @@ class UserService:
             raise
     def return_account_by_Id(id):
         try:
+
             user = UserModel.query.get(id)
             if not user:
                 raise ServiceException(f"No user found with the id {id}")
@@ -136,4 +142,9 @@ class UserService:
             raise PasswordError("Password does not contain a special character")
     
         return True
-      
+    
+    def check_create_api_params_exist(data):
+        required_params = ['username', 'password', 'email']
+        for key in required_params:
+            if key not in data:
+                raise KeyError(f"Not all values in API were sent to create account.")

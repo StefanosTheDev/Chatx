@@ -6,3 +6,6 @@ class PasswordError(Exception):
 
 class ServiceException(Exception):
     pass
+
+class UsernameTakenError(Exception):
+    pass

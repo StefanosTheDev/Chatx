@@ -1,7 +1,8 @@
 import logging
 from flask import jsonify, Blueprint, request
 from Service.UserService import UserService
-from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, PasswordError
+from GlobalExceptions.ServiceExecption import ServiceException, UsernameError, PasswordError, UsernameTakenError
+from sqlalchemy.exc import IntegrityError
 
 userAPI = Blueprint('userapi', __name__)
 
@@ -9,13 +10,27 @@ userAPI = Blueprint('userapi', __name__)
 def create_account():
     try:
         data = request.get_json() # Assuming data is sent as JSON
+        
+        UserService.check_create_api_params_exist(data) # Validate params comming into API exist. 
         new_account = UserService.create_account(
             username=data['username'],
             password=data['password'],
             email = data['email']
         )
         return jsonify({'Accounts': f"{new_account}"}), 201
-    except (UsernameError, PasswordError) as error:
+    except (UsernameError, PasswordError, UsernameTakenError, KeyError) as error:
+         return jsonify({'error': f'{str(error)}'}), 500
+
+@userAPI.route('/userapi/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json() # Data sent as json
+        account = UserService.login(
+        username=data['username'],
+        password=data['password']
+        )
+        return jsonify({'Account': f"{account}"})
+    except (UsernameError, PasswordError, UsernameTakenError, AttributeError) as error:
          return jsonify({'error': f'{str(error)}'}), 500
 
 @userAPI.route('/userapi/getAccounts',methods=['GET'])
@@ -27,19 +42,6 @@ def getAccounts():
         return jsonify({'Accounts fetched': all_accounts}), 201
     except Exception as e:
          return jsonify({'error': f'{str(e)}'}), 500
-
-
-@userAPI.route('/userapi/login', methods=['POST'])
-def login():
-    try:
-        data = request.get_json() # Data sent as json
-        account = UserService.login(
-        username=data['username'],
-        password=data['password']
-        )
-        return jsonify({'Account': f"{account}"})
-    except Exception as e:
-        return jsonify({'error': f'{str(e)}'}), 500
 
 
 @userAPI.route('/userapi/update', methods=['POST'])
@@ -62,7 +64,7 @@ def getAccount_by_Id(id):
     try:
         account = UserService.return_account_by_Id(id)
         if account:
-            return jsonify({'message': 'Account deleted successfully'}), 200
+            return jsonify({'message': f"{account}"}), 200
         else:
          return jsonify({'error': 'Account not found'}), 404
     except Exception as e:

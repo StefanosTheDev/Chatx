@@ -11,3 +11,18 @@ Reg, Login, Friends Management. Then Chat.
 
 
 I believe it's critical to have this done before we do any CHAT related information.
+
+
+
+TODO**
+Fix All CRUD API's 
+
+
+Fix Register Login With Best Protocols.
+- Register Methods. 
+- def check_username(userame) ## Done
+- def check_password(password):  ## Done 
+- def create_account(username, password, email, friends_list=None):
+
+- Login Methods
+Pass in the session user into the Main Chat. 
